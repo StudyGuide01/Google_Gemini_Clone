@@ -1,0 +1,376 @@
+**** gemini code
+// import { GoogleGenAI } from "@google/genai";
+
+// const ai = new GoogleGenAI({
+//   apiKey: "AIzaSyCSU3FLa0wBeoNNwqfa9AKL2AGNlaUHNvs",
+// });
+
+// async function generateText(prompt) {
+//   const model = ai.getGenerativeModel({ model: "gemini-pro" }); // Use correct method and model
+//   const result = await model.generateContent(prompt); // Use string directly as input
+//   const response = await result.response;
+//   const text = await response.text();
+//   return text;
+// }
+
+// export default generateText;
+
+
+
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// const genAI = new GoogleGenerativeAI("AIzaSyCSU3FLa0wBeoNNwqfa9AKL2AGNlaUHNvs");
+
+// async function generateText(prompt) {
+//   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+//   const result = await model.generateContent(prompt);
+//   const response = await result.response;
+//   const text = await response.text();
+
+//   return text;
+// }
+
+// export default generateText;
+
+// import {
+//     GoogleGenerativeAI,
+//     HarmCategory,
+//     HarmBlockThreshold,
+//   } from "@google/generative-ai";
+  
+//   const MODEL_NAME = "gemini-pro"; // Updated model name
+//   const API_KEY = "AIzaSyCSU3FLa0wBeoNNwqfa9AKL2AGNlaUHNvs"; // Use your own key safely
+  
+//   async function runChat(prompt) {
+//     const genAI = new GoogleGenerativeAI(API_KEY);
+//     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+  
+//     const generationConfig = {
+//       temperature: 0.9,
+//       topK: 1,
+//       topP: 1,
+//       maxOutputTokens: 2048,
+//     };
+  
+//     const safetySettings = [
+//       {
+//         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//       {
+//         category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//       {
+//         category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//       {
+//         category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//     ];
+  
+//     const chat = await model.startChat({
+//       generationConfig,
+//       safetySettings,
+//       history: [],
+//     });
+  
+//     const result = await chat.sendMessage(prompt);
+//     const response = result.response;
+//     console.log(response.text());
+//   }
+  
+//   export default runChat;
+  
+  
+
+
+
+// import {
+//     GoogleGenerativeAI,
+//     HarmCategory,
+//     HarmBlockThreshold,
+//   } from "@google/generative-ai";
+  
+//   const MODEL_NAME = "gemini-pro";
+//   const API_KEY = "AIzaSyCSU3FLa0wBeoNNwqfa9AKL2AGNlaUHNvs"; // Use .env for safety
+  
+//   async function runChat(prompt) {
+//     const genAI = new GoogleGenerativeAI(API_KEY);
+//     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+  
+//     const generationConfig = {
+//       temperature: 0.9,
+//       topK: 1,
+//       topP: 1,
+//       maxOutputTokens: 2048,
+//     };
+  
+//     const safetySettings = [
+//       {
+//         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//       {
+//         category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//       {
+//         category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//       {
+//         category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+//         threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+//       },
+//     ];
+  
+//     const result = await model.generateContent({
+//       contents: [{ parts: [{ text: prompt }] }],
+//       generationConfig,
+//       safetySettings,
+//     });
+  
+//     const response = result.response;
+//     console.log("Generated Response:", response.text()); // ✅ Final answer here
+//     return response.text(); // If you want to use it in React
+//   }
+  
+//   export default runChat;
+  
+
+
+  import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: "AIzaSyAo5URwMdB0-tIFWKpuO2qKxEuUtW00bWw" });
+
+const runChat = (prompt)=> {
+  const response = ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: prompt,
+  });
+  console.log(response.text);
+}
+
+export default  runChat;
+
+
+
+
+**** context code
+
+// import { createContext, useState } from "react";
+// import generateText from "../../config/gemini";
+// // import
+
+
+// export const Context = createContext();
+
+// const ContextProvider = (props) => {
+//   const [output, setOutput] = useState("");
+
+//   const onSend = async (prompt) => {
+//     await generateText(prompt);
+//   };
+
+//   const contextValue = {};
+
+//   onSend("What is reactjs");
+
+//   return (
+//     <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+//   );
+// };
+
+// export default ContextProvider;
+
+
+
+// import { createContext, useState, useEffect } from "react";
+// import generateText from "../../config/gemini";
+
+// export const Context = createContext();
+
+// const ContextProvider = (props) => {
+//   const [output, setOutput] = useState("");
+
+//   const onSend = async (prompt) => {
+//     try {
+//       const result = await generateText(prompt);
+//       setOutput(result);
+//       console.log("Generated Response:", result);
+//     } catch (err) {
+//       console.error("Text generation failed:", err);
+//     }
+//   };
+
+//   // Test generation on load
+//   useEffect(() => {
+//     onSend("What is ReactJS?");
+//   }, []);
+
+//   const contextValue = {
+//     output,
+//     onSend,
+//   };
+
+//   return (
+//     <Context.Provider value={contextValue}>
+//       {props.children}
+//     </Context.Provider>
+//   );
+// };
+
+// export default ContextProvider;
+
+
+
+import { createContext } from "react";
+import runChat from "../config/gemini";
+// import runChat from "../config/gemini";
+export const Context = createContext();
+
+const ContextProvider = (props)=>{
+
+
+const onSend = async(prompt)=>{
+  await runChat(prompt);
+}
+
+onSend("what is reactjs?");
+
+  const contextValue = {
+ 
+  }
+  return(
+    <Context.Provider value={contextValue}>
+      {props.children}
+    </Context.Provider>
+  )
+}
+
+
+export default ContextProvider;
+
+
+// import { createContext, useEffect } from "react";
+// import runChat from "../config/gemini";
+// export const Context = createContext();
+
+// const ContextProvider = async(props) => {
+//   const onSend = async (prompt) => {
+//     const answer = await runChat(prompt);
+//     console.log("Answer from Gemini:", answer); // ✅ Logging in React side
+//   };
+
+//   useEffect(() => {
+//     onSend("What is ReactJS?");
+//   }, []);
+
+//   const contextValue = {
+//     onSend,
+//   };
+
+//   return (
+//     <Context.Provider value={contextValue}>
+//       {props.children}
+//     </Context.Provider>
+//   );
+// };
+
+// export default ContextProvider;
+
+
+
+*** complete working context code
+import { createContext, useState } from "react";
+import runChat from "../config/gemini";
+// import runChat from "../config/gemini";
+export const Context = createContext();
+
+const ContextProvider = (props) => {
+const [input,setInput] = useState('');
+const [recentPrompt,setRecentPrompt] = useState('');
+const [previewsPrompt,setPreviesPrompt]= useState([]);
+const [showResult,setShowResult]=useState(false);
+const [loading,setLoading]=useState(false);
+const [resultData,setResultData]=useState('');
+
+
+
+  const onSend = async (prompt) => {
+    await runChat(prompt);
+  };
+
+  // onSend("what is male actor name of devdas indian move?");
+
+  const contextValue = {
+    previewsPrompt,
+    setPreviesPrompt,
+    onSend,
+    recentPrompt,
+    setRecentPrompt,
+    showResult,
+    setShowResult,
+    loading,
+    setLoading,
+    resultData,
+    setResultData,
+    input,
+    setInput
+
+  };
+  return (
+    <Context.Provider value={contextValue}>{props.children}</Context.Provider>
+  );
+};
+
+export default ContextProvider;
+
+
+*** Complete gemini.js file code
+
+// import { GoogleGenAI } from "@google/genai";
+
+// const ai = new GoogleGenAI({
+//   apiKey: "AIzaSyAo5URwMdB0-tIFWKpuO2qKxEuUtW00bWw",
+// });
+
+// const runChat = (prompt) => {
+//   const response = ai.models.generateContent({
+//     model: "gemini-2.0-flash",
+//     contents: prompt,
+//   });
+//   console.log(response.text);
+// };
+
+// export default runChat;
+
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI("AIzaSyAo5URwMdB0-tIFWKpuO2qKxEuUtW00bWw");
+
+const runChat = async (prompt) => {
+  try {
+    // Get the generative model - using gemini-pro or the latest available model
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash-latest", // or "gemini-1.0-pro"
+    });
+    
+    // Generate content
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    
+    console.log(text);
+    return text;
+  } catch (error) {
+    console.error("Error in runChat:", error);
+    throw error;
+  }
+};
+
+export default runChat;
